@@ -1,6 +1,6 @@
 from time import time
 from containers.inventory import Inventory
-from containers.interface import Interface
+from controllers.interface import Interface
 from models.character import Character
 from models.items import InventoryItem, Item
 from models.currency import Currency

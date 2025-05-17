@@ -1,4 +1,4 @@
-from containers.registry import Registry
+from containers.registry import Registry, EntityRegistry
 
 
 class MapRegistry(Registry):
@@ -16,17 +16,17 @@ class MapCellRegistry(Registry):
 
 
 class Map:
-    def __init__(self, id, name: str, map_cells = MapCellRegistry):
+    def __init__(self, id, name: str, map_cells = MapCellRegistry()):
         self.__id = id
         self.name = name
         self.__map_cells = map_cells
 
     @property
-    def map_cells(self) -> iter:
-        return self.__map_cells.cells
+    def map_cells(self):
+        return self.__map_cells
 
     def get_cell(self, id):
-        for cell in self.map_cells:
+        for cell in self.map_cells.cells:
             if cell.id == id:
                 return cell
 
@@ -34,19 +34,24 @@ class Map:
 
 
 class MapCell:
-    def __init__(self, map: Map, cell_name: str, cell_index: int):
+    def __init__(self, map: Map, name: str, cell_index: int, entities = EntityRegistry()):
         self.__map = map
-        self.__cell_name = cell_name
+        self.__name = name
         self.__cell_index = cell_index
+        self.__entities = entities
 
     @property
     def map(self) -> Map:
         return self.__map
 
     @property
-    def cell_name(self) -> str:
-        return self.__cell_name
+    def name(self) -> str:
+        return self.__name
 
     @property
     def cell_index(self) -> int:
         return self.cell_index
+
+    @property
+    def entities(self) -> EntityRegistry:
+        return self.__entities

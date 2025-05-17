@@ -19,6 +19,9 @@ class Registry:
     def delete(self, item):
         self.__items.remove(item)
 
+    def __getitem__(self, index):
+        return self.__items[index]
+
     def __iter__(self) -> iter:
         return iter(self.__items)
 
@@ -65,4 +68,12 @@ class TradableCurrencyRegistry(CurrencyRegistry):
 
     @property
     def currencies(self):
+        return self._items
+
+class EntityRegistry(Registry):
+    def __init__(self):
+        super().__init__()
+
+    @property
+    def entities(self):
         return self._items
