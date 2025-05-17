@@ -1,5 +1,5 @@
 from time import time
-from inventory import PlayerInventory
+from containers.inventory import PlayerInventory
 
 class CharacterError(Exception):
     pass

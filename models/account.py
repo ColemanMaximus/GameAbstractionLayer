@@ -1,6 +1,6 @@
 from time import time
 
-from registry import AccountRegistry, CharacterRegistry
+from containers.registry import AccountRegistry, CharacterRegistry
 from character import Character, CharacterError
 
 class Account:
