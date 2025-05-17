@@ -3,6 +3,7 @@ from abc import ABC
 from containers.registry import Registry
 from models.items import Item
 
+
 class Inventory(Registry, ABC):
     def __init__(self, items: Registry = None):
         super().__init__()
@@ -24,7 +25,7 @@ class InventoryItem(Item):
                  inventory: Inventory,
                  item: Item,
                  obtained_ts: float = None
-        ):
+                 ):
         self.__inventory = inventory
         self.__inv_id = inv_id
         self.__obtained = obtained_ts
@@ -51,6 +52,7 @@ class PlayerInventory(Inventory):
     @property
     def character(self):
         return self.__character
+
 
 class ShopInventory(Inventory):
     def __init__(self, items: Registry = None):

@@ -36,3 +36,20 @@ class CharacterRegistry(Registry):
     @property
     def characters(self):
         return self._items
+
+
+class CurrencyRegistry(Registry):
+    def __init__(self):
+        super().__init__()
+
+    @property
+    def currencies(self):
+        return self._items
+
+class TradableCurrencyRegistry(CurrencyRegistry):
+    def __init__(self):
+        super().__init__()
+
+    @property
+    def currencies(self):
+        return self._items

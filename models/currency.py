@@ -1,3 +1,5 @@
+
+
 class Currency:
     def __init__(self, name: str, ending_char: str = ""):
         self.name = name

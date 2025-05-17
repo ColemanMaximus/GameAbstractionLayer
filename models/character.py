@@ -1,5 +1,8 @@
 from time import time
+
 from containers.inventory import PlayerInventory
+from containers.registry import TradableCurrencyRegistry
+
 
 class CharacterError(Exception):
     pass
@@ -8,11 +11,18 @@ class CharacterError(Exception):
 class Character:
     max_name_length = 18
 
-    def __init__(self, account, name: str, timestamp: float = None, inventory = None):
+    def __init__(self,
+                 account,
+                 name: str,
+                 timestamp: float = None,
+                 inventory = None,
+                 currencies: TradableCurrencyRegistry = None
+                 ):
         self.account = account
         self.name = name
         self.__created_ts = timestamp if timestamp else time()
         self.__inventory = inventory if inventory else PlayerInventory(self)
+        self.__currencies = currencies
 
     @property
     def name(self) -> str:
@@ -34,6 +44,10 @@ class Character:
     @property
     def inventory(self):
         return self.__inventory
+
+    @property
+    def currencies(self):
+        return self.__currencies
 
     def __str__(self):
         return self.name
