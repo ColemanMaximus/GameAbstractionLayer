@@ -5,6 +5,10 @@ class Item:
         self.description = description
 
     @property
+    def id(self):
+        return self.__id
+
+    @property
     def name(self) -> str:
         return self.__name
 
@@ -19,3 +23,7 @@ class Item:
     @description.setter
     def description(self, description: str):
         self.__description = description
+
+class ShopItem(Item):
+    def __init__(self, item: Item, price: float):
+        super().__init__(item.id, item.name, item.description)

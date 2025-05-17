@@ -3,11 +3,10 @@ from time import time
 from registry import AccountRegistry, CharacterRegistry
 from character import Character, CharacterError
 
-
 class Account:
     def __init__(self, email: str, timestamp: float = None):
         self.email = email
-        self.__created_timestamp = timestamp if timestamp else time()
+        self.__created_ts = timestamp if timestamp else time()
         self.__characters = CharacterRegistry()
 
     @property
@@ -40,8 +39,8 @@ class Account:
         return self.__characters
 
     @property
-    def created_timestamp(self) -> float:
-        return self.__created_timestamp
+    def created(self) -> float:
+        return self.__created_ts
 
     @classmethod
     def create(cls, email: str, registry: AccountRegistry = None):
@@ -55,6 +54,7 @@ class Account:
     def delete(cls, account, registry: AccountRegistry) -> int:
         registry.delete(account)
         return 1
+
 
 def _is_email_valid(email: str) -> bool:
     if not email.strip() or "@" not in email:

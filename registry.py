@@ -19,6 +19,7 @@ class Registry:
     def __iter__(self):
         return self.__items
 
+
 class AccountRegistry(Registry):
     def __init__(self):
        super().__init__()
@@ -26,6 +27,7 @@ class AccountRegistry(Registry):
     @property
     def accounts(self):
         return self._items
+
 
 class CharacterRegistry(Registry):
     def __init__(self):

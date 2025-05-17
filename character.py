@@ -1,10 +1,9 @@
 from time import time
-
 from inventory import PlayerInventory
-
 
 class CharacterError(Exception):
     pass
+
 
 class Character:
     max_name_length = 18
@@ -12,7 +11,7 @@ class Character:
     def __init__(self, account, name: str, timestamp: float = None, inventory = None):
         self.account = account
         self.name = name
-        self.__created_timestamp = timestamp if timestamp else time()
+        self.__created_ts = timestamp if timestamp else time()
         self.__inventory = inventory if inventory else PlayerInventory(self)
 
     @property
@@ -29,8 +28,8 @@ class Character:
         self.__name = name
 
     @property
-    def created_timestamp(self) -> float:
-        return self.__created_timestamp
+    def created(self) -> float:
+        return self.__created_ts
 
     @property
     def inventory(self):
@@ -38,6 +37,7 @@ class Character:
 
     def __str__(self):
         return self.name
+
 
 def _is_name_valid(name: str) -> bool:
     if not name.strip() or len(name) > Character.max_name_length:
