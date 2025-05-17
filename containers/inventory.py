@@ -29,8 +29,3 @@ class PlayerInventory(Inventory):
     @property
     def character(self):
         return self.__character
-
-
-class ShopInventory(Inventory):
-    def __init__(self, *items):
-        super().__init__(items)
