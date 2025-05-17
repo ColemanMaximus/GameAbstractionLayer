@@ -70,6 +70,14 @@ class TradableCurrencyRegistry(CurrencyRegistry):
     def currencies(self):
         return self._items
 
+class NpcRegistry(Registry):
+    def __init__(self):
+        super().__init__()
+
+    @property
+    def npcs(self):
+        return self._items
+
 class EntityRegistry(Registry):
     def __init__(self):
         super().__init__()

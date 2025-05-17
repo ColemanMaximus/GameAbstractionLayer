@@ -1,4 +1,4 @@
-from containers.registry import Registry, EntityRegistry
+from containers.registry import Registry, NpcRegistry
 
 
 class MapRegistry(Registry):
@@ -34,11 +34,11 @@ class Map:
 
 
 class MapCell:
-    def __init__(self, map: Map, name: str, cell_index: int, entities = EntityRegistry()):
+    def __init__(self, map: Map, name: str, cell_index: int, npcs = NpcRegistry()):
         self.__map = map
         self.__name = name
         self.__cell_index = cell_index
-        self.__entities = entities
+        self.__npcs = npcs
 
     @property
     def map(self) -> Map:
@@ -53,5 +53,5 @@ class MapCell:
         return self.cell_index
 
     @property
-    def entities(self) -> EntityRegistry:
-        return self.__entities
+    def npcs(self) -> NpcRegistry:
+        return self.__npcs

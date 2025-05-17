@@ -1,8 +1,21 @@
+from models.character import Character
+from models.npc import NpcData
+
+
 class Entity:
-    def __init__(self, id, name: str, etype = None):
-        self.__id = id
+    def __init__(self, entity_id, parent_id, name: str, entity_type = None):
+        self.__entity_id = entity_id
+        self.__parent_id = parent_id
         self.name = name
-        self.type = etype
+        self.entity_type = entity_type
+
+    @property
+    def entity_id(self):
+        return self.__entity_id
+
+    @property
+    def parent_id(self):
+        return self.__parent_id
 
     @property
     def name(self) -> str:
@@ -13,17 +26,19 @@ class Entity:
         self.__name = name
 
     @property
-    def type(self):
-        return self.__type
+    def entity_type(self):
+        return self.__entity_type
 
-    @type.setter
-    def type(self, etype):
-        self.__type = etype
+    @entity_type.setter
+    def entity_type(self, entity_type):
+        self.__entity_type = entity_type
+
 
 class Player(Entity):
-    def __init__(self, char_id, name: str):
-        super().__init__(char_id, name)
+    def __init__(self, character: Character, name: str):
+        super().__init__(character.char_id, character.char_id, name)
+
 
 class NPC(Entity):
-    def __init__(self, npc_id, name: str):
-        super().__init__(npc_id, name)
+    def __init__(self, entity_id, npcdata: NpcData):
+        super().__init__(entity_id, npcdata.npc_id, npcdata.name)

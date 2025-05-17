@@ -13,16 +13,22 @@ class Character:
 
     def __init__(self,
                  account,
+                 char_id,
                  name: str,
                  timestamp: float = None,
                  inventory = None,
                  currencies: TradableCurrencyRegistry = None
                  ):
         self.account = account
+        self.__char_id = char_id
         self.name = name
         self.__created_ts = timestamp if timestamp else time()
         self.__inventory = inventory if inventory else PlayerInventory(self)
         self.__currencies = currencies if currencies else TradableCurrencyRegistry()
+
+    @property
+    def char_id(self):
+        return self.__char_id
 
     @property
     def name(self) -> str:

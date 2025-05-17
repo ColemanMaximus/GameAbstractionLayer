@@ -1,6 +1,9 @@
 from abc import ABC, abstractmethod
 
+from containers.registry import EntityRegistry
 from models.map import Map, MapCell
+from models.entity import NPC
+from models.npc import NpcData
 
 
 class Instance(ABC):
@@ -19,10 +22,27 @@ class Instance(ABC):
 class MapCellInstance(Instance):
     def __init__(self, map_cell: MapCell):
         super().__init__(map_cell)
+        self.__entities = EntityRegistry()
 
     @property
     def cell(self) -> MapCell:
         return self.source
+
+    @property
+    def entities(self) -> EntityRegistry:
+        return self.__entities
+
+    def init_entities(self):
+        if not self.cell.entities:
+            return
+
+        for npcdata in self.cell.npcs:
+            if not isinstance(npcdata, NpcData):
+                continue
+
+            self.entities.add(
+                NPC(len(self.entities) + 1, npcdata)
+            )
 
     def kill(self):
         pass
