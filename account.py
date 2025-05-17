@@ -1,25 +1,15 @@
 from time import time
 from typing import List
 
-from registry import Registry
+from registry import AccountRegistry, CharacterRegistry
 from character import Character, CharacterError
 
-class AccountRegistry(Registry):
-    def __init__(self):
-       super().__init__()
-
-    @property
-    def accounts(self):
-        return self._items
-
-    def __iter__(self):
-        return self._items
 
 class Account:
     def __init__(self, email: str):
         self.email = email
         self.__created_timestamp = time()
-        self.__characters = []
+        self.__characters = CharacterRegistry()
 
     @property
     def email(self) -> str:
@@ -34,7 +24,8 @@ class Account:
 
     def create_character(self, name: str):
         char = Character(self, name)
-        self.__characters.append(char)
+        if self.__characters:
+            self.__characters.add(char)
 
         return char
 
@@ -42,11 +33,11 @@ class Account:
         if char not in self.__characters:
             raise CharacterError("This character doesn't exist in this context.")
 
-        self.__characters.remove(char)
+        self.__characters.delete(char)
         return 1
 
     @property
-    def characters(self) -> List[Character]:
+    def characters(self) -> CharacterRegistry:
         return self.__characters
 
     @property

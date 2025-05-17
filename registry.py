@@ -4,7 +4,7 @@ class Registry:
 
     @property
     def _items(self):
-        return self.__items
+        return iter(self.__items)
 
     @_items.setter
     def _items(self, items):
@@ -18,3 +18,25 @@ class Registry:
 
     def __iter__(self):
         return self.__items
+
+class AccountRegistry(Registry):
+    def __init__(self):
+       super().__init__()
+
+    @property
+    def accounts(self):
+        return self._items
+
+    def __iter__(self):
+        return self._items
+
+class CharacterRegistry(Registry):
+    def __init__(self):
+       super().__init__()
+
+    @property
+    def characters(self):
+        return self._items
+
+    def __iter__(self):
+        return self._items
