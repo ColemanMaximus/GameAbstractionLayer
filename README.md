@@ -8,6 +8,8 @@ Modules to handle game systems usually found in RPG games, such as player data, 
 	 - Item
 		 - InventoryItem
 			 - **ShopItem**
+	 - NPC
+       - **NpcData**
 	 - Entity
 		 - **Player**
 		 - **NPC**

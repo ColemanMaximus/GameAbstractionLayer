@@ -23,6 +23,7 @@ class MapCellInstance(Instance):
     def __init__(self, map_cell: MapCell):
         super().__init__(map_cell)
         self.__entities = EntityRegistry()
+        self.init_entities()
 
     @property
     def cell(self) -> MapCell:
@@ -33,7 +34,7 @@ class MapCellInstance(Instance):
         return self.__entities
 
     def init_entities(self):
-        if not self.cell.entities:
+        if not self.cell.npcs:
             return
 
         for npcdata in self.cell.npcs:

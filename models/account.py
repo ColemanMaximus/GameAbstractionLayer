@@ -1,4 +1,5 @@
 from time import time
+from uuid import uuid4
 
 from containers.registry import AccountRegistry, CharacterRegistry, TradableCurrencyRegistry
 from models.character import Character, CharacterError
@@ -22,7 +23,7 @@ class Account:
         self.__email = email
 
     def create_character(self, name: str):
-        char = Character(self, name)
+        char = Character(self, str(uuid4()), name, time())
         if self.__characters:
             self.__characters.add(char)
 
