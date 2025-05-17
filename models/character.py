@@ -22,7 +22,7 @@ class Character:
         self.name = name
         self.__created_ts = timestamp if timestamp else time()
         self.__inventory = inventory if inventory else PlayerInventory(self)
-        self.__currencies = currencies
+        self.__currencies = currencies if currencies else TradableCurrencyRegistry()
 
     @property
     def name(self) -> str:
@@ -46,7 +46,7 @@ class Character:
         return self.__inventory
 
     @property
-    def currencies(self):
+    def currencies(self) -> TradableCurrencyRegistry:
         return self.__currencies
 
     def __str__(self):

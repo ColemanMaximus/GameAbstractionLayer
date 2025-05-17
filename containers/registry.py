@@ -17,7 +17,7 @@ class Registry:
         self.__items.remove(item)
 
     def __iter__(self):
-        return self.__items
+        return iter(self.__items)
 
 
 class AccountRegistry(Registry):

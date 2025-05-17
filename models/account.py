@@ -1,14 +1,14 @@
 from time import time
 
 from containers.registry import AccountRegistry, CharacterRegistry, TradableCurrencyRegistry
-from character import Character, CharacterError
+from models.character import Character, CharacterError
 
 class Account:
     def __init__(self, email: str, timestamp: float = None, currencies: TradableCurrencyRegistry = None):
         self.email = email
         self.__created_ts = timestamp if timestamp else time()
         self.__characters = CharacterRegistry()
-        self.__currencies = currencies
+        self.__currencies = currencies if currencies else TradableCurrencyRegistry()
 
     @property
     def email(self) -> str:
@@ -40,7 +40,7 @@ class Account:
         return self.__characters
 
     @property
-    def currencies(self):
+    def currencies(self) -> TradableCurrencyRegistry:
         return self.__currencies
 
     @property
