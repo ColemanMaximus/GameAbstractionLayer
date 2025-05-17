@@ -1,7 +1,10 @@
+from time import time
 from containers.inventory import Inventory
 from containers.interface import Interface
-from models.items import InventoryItem
+from models.character import Character
+from models.items import InventoryItem, Item
 from models.currency import Currency
+
 
 class ShopInventory(Inventory):
     def __init__(self, *items):
@@ -39,6 +42,7 @@ class ShopItem(InventoryItem):
 
         self.__price = price
 
+
 class Shop(Interface):
     def __init__(self, id, name: str, shop_inventory: ShopInventory = None):
         super().__init__(name)
@@ -56,3 +60,35 @@ class Shop(Interface):
     @property
     def items(self):
         return iter(self.inventory.items)
+
+    def buy_item(self, character: Character, shop_item: ShopItem) -> int:
+        if not shop_item in self.inventory:
+            raise IndexError("The item wasn't found in the ShopInventory registry.")
+
+        if not self._can_buy(character, shop_item):
+            return 0
+
+        character.currencies.get_currency(shop_item.currency.name).remove(shop_item.price)
+        character.inventory.add(
+            InventoryItem(
+                len(character.inventory) + 1,
+                character.inventory,
+                Item(
+                    shop_item.id,
+                    shop_item.name,
+                    shop_item.description),
+                time()
+            )
+        )
+        return 1
+
+    @staticmethod
+    def _can_buy(character: Character, shop_item: ShopItem) -> bool:
+        char_currency = character.currencies.get_currency(shop_item.currency.name)
+        if not character.inventory:
+            return False
+
+        if not char_currency or not char_currency.can_afford(shop_item.price):
+            return False
+        
+        return True

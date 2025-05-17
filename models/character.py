@@ -47,7 +47,14 @@ class Character:
 
     @property
     def currencies(self) -> TradableCurrencyRegistry:
-        return self.__currencies
+        char_currencies = [currency for currency in self.__currencies]
+        acc_currencies = [currency for currency in self.account.currencies]
+
+        currencies = TradableCurrencyRegistry()
+        for currency in (char_currencies + acc_currencies):
+            currencies.add(currency)
+
+        return currencies
 
     def __str__(self):
         return self.name

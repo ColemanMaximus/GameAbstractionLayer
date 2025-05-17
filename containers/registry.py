@@ -1,9 +1,12 @@
+from models.currency import Currency
+
+
 class Registry:
     def __init__(self):
         self.__items = []
 
     @property
-    def _items(self):
+    def _items(self) -> iter:
         return iter(self.__items)
 
     @_items.setter
@@ -16,8 +19,11 @@ class Registry:
     def delete(self, item):
         self.__items.remove(item)
 
-    def __iter__(self):
+    def __iter__(self) -> iter:
         return iter(self.__items)
+
+    def __len__(self) -> int:
+        return len(self.__items)
 
 
 class AccountRegistry(Registry):
@@ -45,6 +51,13 @@ class CurrencyRegistry(Registry):
     @property
     def currencies(self):
         return self._items
+
+    def get_currency(self, name: str) -> Currency | None:
+        for currency in self.currencies:
+            if currency.name == name:
+                return currency
+
+        return None
 
 class TradableCurrencyRegistry(CurrencyRegistry):
     def __init__(self):
