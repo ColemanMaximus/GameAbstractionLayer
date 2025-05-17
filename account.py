@@ -1,14 +1,13 @@
 from time import time
-from typing import List
 
 from registry import AccountRegistry, CharacterRegistry
 from character import Character, CharacterError
 
 
 class Account:
-    def __init__(self, email: str):
+    def __init__(self, email: str, timestamp: float = None):
         self.email = email
-        self.__created_timestamp = time()
+        self.__created_timestamp = timestamp if timestamp else time()
         self.__characters = CharacterRegistry()
 
     @property

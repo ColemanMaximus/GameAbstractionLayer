@@ -27,16 +27,10 @@ class AccountRegistry(Registry):
     def accounts(self):
         return self._items
 
-    def __iter__(self):
-        return self._items
-
 class CharacterRegistry(Registry):
     def __init__(self):
        super().__init__()
 
     @property
     def characters(self):
-        return self._items
-
-    def __iter__(self):
         return self._items
