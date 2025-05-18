@@ -33,11 +33,9 @@ class Item:
 class InventoryItem(Item):
     def __init__(self,
                  inv_id,
-                 inventory: Inventory,
                  item: Item,
                  obtained_ts: float = None
                  ):
-        self.__inventory = inventory
         self.__inv_id = inv_id
         self.__obtained = obtained_ts
         super().__init__(item.id, item.name, item.description)
@@ -45,10 +43,6 @@ class InventoryItem(Item):
     @property
     def inv_id(self):
         return self.__inv_id
-
-    @property
-    def inventory(self):
-        return self.__inventory
 
     @property
     def obtained(self):

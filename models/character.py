@@ -2,7 +2,6 @@ from time import time
 
 from containers.inventory import PlayerInventory
 from containers.registry import TradableCurrencyRegistry
-from models.account import Account
 
 
 class CharacterError(Exception):
@@ -13,7 +12,7 @@ class Character:
     max_name_length = 18
 
     def __init__(self,
-                 account: Account,
+                 account,
                  char_id,
                  name: str,
                  timestamp: float = None,
@@ -67,7 +66,7 @@ class Character:
         return self.name
 
     @staticmethod
-    def create(account: Account, name: str):
+    def create(account, name: str):
         return account.create_character(name)
 
 

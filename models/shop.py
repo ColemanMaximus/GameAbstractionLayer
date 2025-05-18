@@ -16,7 +16,7 @@ class ShopItem(InventoryItem):
         if not isinstance(item, InventoryItem):
             raise ValueError("ShopItems can only be instantiated with InventoryItem objects.")
 
-        super().__init__(item.inv_id, item.inventory, item, item.obtained)
+        super().__init__(item.inv_id, item, item.obtained)
         self.currency = currency
         self.price = price
 
