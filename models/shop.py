@@ -13,11 +13,11 @@ class ShopInventory(Inventory):
 
 
 class ShopItem(InventoryItem):
-    def __init__(self, item: InventoryItem, currency: Currency = None, price: int | float = 0):
-        if not isinstance(item, InventoryItem):
-            raise ValueError("ShopItems can only be instantiated with InventoryItem objects.")
+    def __init__(self, inv_id, item: Item, currency: Currency = None, price: int | float = 0):
+        if not isinstance(item, Item):
+            raise ValueError("ShopItems can only be instantiated with Item objects.")
 
-        super().__init__(item.inv_id, item, item.obtained)
+        super().__init__(inv_id, item)
         self.currency = currency
         self.price = price
 
@@ -102,3 +102,6 @@ class Shop(Interface):
             return False
         
         return True
+
+    def __iter__(self):
+        return self.items

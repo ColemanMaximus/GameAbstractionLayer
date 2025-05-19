@@ -1,4 +1,6 @@
+import json
 from uuid import uuid4
+from pathlib import Path
 
 from models.account import Account
 from models.currency import Currency
@@ -11,26 +13,23 @@ if __name__ == "__main__":
     account = Account(email="example@email.com")
     char = account.create_character(name="Frexel").content
 
-    # Create items which can be used in inventories.
-    sword_item = Item(
-        id=1,
-        name="Warrior Sword",
-        description="Sword for a warrior!"
-    )
-    # Converts an item into one which can be used in inventory objects.
-    inventory_item = InventoryItem(inv_id=1, item=sword_item)
+    # Create items from a json string of items.
+    items_json = json.loads(Path("sample_items.json").read_text())
+    items = [Item(**item) for item in items_json]
 
-    # Example of a shop, with an inventory and items for sale.
     # Creating a currency which the shop uses to handle item purchases.
     shop_currency = Currency("Gold", "g")
-    shop = Shop(id=str(uuid4()), name="Weapon Shop")
-    # Converts an inventory item into a shop item, with a
-    # defined currency and price.
+
+    # Converts an item into a shop item.
     shop_item = ShopItem(
-        item=inventory_item,
+        inv_id=1,
+        item=items[0],
         currency=shop_currency,
-        price=150
+        price=200
     )
+
+    # Example of a shop, with an inventory and items for sale.
+    shop = Shop(id=str(uuid4()), name="Weapon Shop")
 
     # Adds a ShopItem to the shop's inventory
     shop.inventory.add(shop_item)
