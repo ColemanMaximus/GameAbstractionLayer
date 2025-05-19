@@ -16,9 +16,10 @@ class MapCellRegistry(Registry):
 
 
 class Map:
-    def __init__(self, id, name: str, map_cells = MapCellRegistry()):
-        self.__id = id
-        self.name = name
+    def __init__(self, map_cells = MapCellRegistry(), **kwargs):
+        for key, value in kwargs.items():
+            self.__setattr__(key, value)
+
         self.__map_cells = map_cells
 
     @property

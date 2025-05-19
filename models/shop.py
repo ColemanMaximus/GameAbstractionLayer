@@ -78,12 +78,7 @@ class Shop(Interface):
             )
 
         char_item = InventoryItem(
-            len(character.inventory) + 1,
-            Item(
-                shop_item.id,
-                shop_item.name,
-                shop_item.description),
-            time()
+            len(character.inventory) + 1, shop_item.item, time()
         )
 
         character.currencies.get_currency(shop_item.currency.name).remove(shop_item.price)
