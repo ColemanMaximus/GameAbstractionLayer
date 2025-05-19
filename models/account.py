@@ -30,20 +30,19 @@ class Account:
         if self.__characters:
             self.__characters.add(char)
 
-        return ActionResponse(action, ActionStatusType.SUCCESS, char)
+        action.status = ActionStatusType.SUCCESS
+        return action.response(char)
 
     def delete_character(self, char: Character) -> ActionResponse:
         action = Action(ActionType.CHARACTER_DELETE)
 
         if char not in self.__characters:
-            return ActionResponse(
-                action,
-                ActionStatusType.FAILED,
-                "No character with this name could be found."
-            )
+            action.status = ActionStatusType.FAILED
+            return action.response("No character with this name could be found.")
 
         self.__characters.delete(char)
-        return ActionResponse(action, ActionStatusType.SUCCESS)
+        action.status = ActionStatusType.SUCCESS
+        return action.response()
 
     @property
     def characters(self) -> CharacterRegistry:

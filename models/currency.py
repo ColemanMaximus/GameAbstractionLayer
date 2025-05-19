@@ -42,13 +42,15 @@ class TradableCurrency(Currency):
         action = Action(ActionType.CURRENCY_ADDED)
         self.balance += value
 
-        return ActionResponse(action, ActionStatusType.SUCCESS, self.balance)
+        action.status = ActionStatusType.SUCCESS
+        return action.response(self.balance)
 
     def remove(self, value: int | float) -> ActionResponse:
         action = Action(ActionType.CURRENCY_REMOVED)
         self.balance -= value
 
-        return ActionResponse(action, ActionStatusType.SUCCESS, self.balance)
+        action.status = ActionStatusType.SUCCESS
+        return action.response(self.balance)
 
     def can_afford(self, balance: int | float) -> bool:
         if self.balance < balance:

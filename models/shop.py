@@ -66,16 +66,14 @@ class Shop(Interface):
         action = Action(ActionType.SHOP_ITEM_BUY)
 
         if not shop_item in self.inventory:
-            return ActionResponse(
-                action,
-                ActionStatusType.ERROR,
+            action.status = ActionStatusType.ERROR
+            return action.response(
                 "No item was found within the shops inventory registry."
             )
 
         if not self._can_buy(character, shop_item):
-            return ActionResponse(
-                action,
-                ActionStatusType.FAILED,
+            action.status = ActionStatusType.FAILED
+            return action.response(
                 "Character didn't have enough of the currency to purchase this item."
             )
 
@@ -90,7 +88,9 @@ class Shop(Interface):
 
         character.currencies.get_currency(shop_item.currency.name).remove(shop_item.price)
         character.inventory.add(char_item)
-        return ActionResponse(action, ActionStatusType.SUCCESS, char_item)
+
+        action.status = ActionStatusType.SUCCESS
+        return action.response(char_item)
 
     @staticmethod
     def _can_buy(character: Character, shop_item: ShopItem) -> bool:

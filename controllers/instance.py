@@ -38,11 +38,8 @@ class MapCellInstance(Instance):
         action = Action(ActionType.MAP_ENTITIES_LOAD)
 
         if not self.cell.npcs:
-            return ActionResponse(
-                action,
-                ActionStatusType.FAILED,
-                "There were no initial entities to load."
-            )
+            action.status = ActionStatusType.FAILED
+            return action.response("There were no initial entities to load.")
 
         for npcdata in self.cell.npcs:
             if not isinstance(npcdata, NpcData):
@@ -52,7 +49,8 @@ class MapCellInstance(Instance):
                 NPC(len(self.entities) + 1, npcdata)
             )
 
-        return ActionResponse(action, ActionStatusType.SUCCESS)
+        action.status = ActionStatusType.SUCCESS
+        return action.response()
 
     def kill(self):
         pass
@@ -74,15 +72,14 @@ class MapInstance(Instance):
         action = Action(ActionType.MAP_CELL_LOAD)
 
         if not map_cell:
-            return ActionResponse(
-                action,
-                ActionStatusType.ERROR,
-                "There was no map cell to load from."
-            )
+            action.status = ActionStatusType.ERROR
+            return action.response("There was no map cell to load from.")
 
         cell_instance = MapCellInstance(map_cell)
         self.__active_cell = cell_instance
-        return ActionResponse(action, ActionStatusType.SUCCESS, cell_instance)
+
+        action.status = ActionStatusType.SUCCESS
+        return action.response(cell_instance)
 
     @property
     def active_cell(self) -> MapCellInstance:

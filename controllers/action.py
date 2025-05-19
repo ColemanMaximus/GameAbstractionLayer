@@ -13,20 +13,6 @@ class ActionType(Enum):
     MAP_ENTITIES_LOAD = "MAP_ENTITIES_LOAD"
 
 
-class Action:
-    def __init__(self, action_type: ActionType):
-        self.__type = action_type
-        self.__timestamp = time()
-
-    @property
-    def type(self) -> ActionType:
-        return self.__type
-
-    @property
-    def timestamp(self) -> float:
-        return self.__timestamp
-
-
 class ActionStatusType(Enum):
     SUCCESS = "SUCCESS"
     PENDING = "PENDING"
@@ -42,11 +28,41 @@ class ActionStatus:
     def type(self) -> ActionStatusType:
         return self.__type
 
+    @type.setter
+    def type(self, status_type: ActionStatusType):
+        self.__type = status_type
+
+
+class Action:
+    def __init__(self, action_type: ActionType):
+        self.__type = action_type
+        self.__timestamp = time()
+        self.__status = ActionStatus(ActionStatusType.PENDING)
+
+    @property
+    def type(self) -> ActionType:
+        return self.__type
+
+    @property
+    def status(self) -> ActionStatus:
+        return self.__status
+
+    @status.setter
+    def status(self, status_type: ActionStatusType):
+        self.__status.type = status_type
+
+    @property
+    def timestamp(self) -> float:
+        return self.__timestamp
+
+    def response(self, content = None):
+        return ActionResponse(self, self.status, content)
+
 
 class ActionResponse:
-    def __init__(self, action: Action, status: ActionStatusType, content = None):
+    def __init__(self, action: Action, status: ActionStatus, content = None):
         self.__action = action
-        self.__status = ActionStatus(status)
+        self.__status = status
         self.__timestamp = time()
         self.__content = content
 
