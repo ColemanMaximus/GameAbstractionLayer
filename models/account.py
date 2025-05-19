@@ -2,6 +2,7 @@ from time import time
 from uuid import uuid4
 
 from containers.registry import AccountRegistry, CharacterRegistry, TradableCurrencyRegistry
+from controllers.action import ActionResponse, Action, ActionStatus, ActionStatusType, ActionType
 from models.character import Character, CharacterError
 
 class Account:
@@ -22,19 +23,27 @@ class Account:
 
         self.__email = email
 
-    def create_character(self, name: str):
+    def create_character(self, name: str) -> ActionResponse:
+        action = Action(ActionType.CHARACTER_CREATE)
+
         char = Character(self, str(uuid4()), name, time())
         if self.__characters:
             self.__characters.add(char)
 
-        return char
+        return ActionResponse(action, ActionStatusType.SUCCESS, char)
 
-    def delete_character(self, char: Character) -> int:
+    def delete_character(self, char: Character) -> ActionResponse:
+        action = Action(ActionType.CHARACTER_DELETE)
+
         if char not in self.__characters:
-            raise CharacterError("This character doesn't exist in this context.")
+            return ActionResponse(
+                action,
+                ActionStatusType.FAILED,
+                "No character with this name could be found."
+            )
 
         self.__characters.delete(char)
-        return 1
+        return ActionResponse(action, ActionStatusType.SUCCESS)
 
     @property
     def characters(self) -> CharacterRegistry:

@@ -1,5 +1,6 @@
 from time import time
 from containers.inventory import Inventory
+from controllers.action import ActionResponse, Action, ActionType, ActionStatusType
 from controllers.interface import Interface
 from models.character import Character
 from models.items import InventoryItem, Item
@@ -61,26 +62,35 @@ class Shop(Interface):
     def items(self):
         return iter(self.inventory.items)
 
-    def buy_item(self, character: Character, shop_item: ShopItem) -> int:
+    def buy_item(self, character: Character, shop_item: ShopItem) -> ActionResponse:
+        action = Action(ActionType.SHOP_ITEM_BUY)
+
         if not shop_item in self.inventory:
-            raise IndexError("The item wasn't found in the ShopInventory registry.")
+            return ActionResponse(
+                action,
+                ActionStatusType.ERROR,
+                "No item was found within the shops inventory registry."
+            )
 
         if not self._can_buy(character, shop_item):
-            return 0
+            return ActionResponse(
+                action,
+                ActionStatusType.FAILED,
+                "Character didn't have enough of the currency to purchase this item."
+            )
+
+        char_item = InventoryItem(
+            len(character.inventory) + 1,
+            Item(
+                shop_item.id,
+                shop_item.name,
+                shop_item.description),
+            time()
+        )
 
         character.currencies.get_currency(shop_item.currency.name).remove(shop_item.price)
-        character.inventory.add(
-            InventoryItem(
-                len(character.inventory) + 1,
-                character.inventory,
-                Item(
-                    shop_item.id,
-                    shop_item.name,
-                    shop_item.description),
-                time()
-            )
-        )
-        return 1
+        character.inventory.add(char_item)
+        return ActionResponse(action, ActionStatusType.SUCCESS, char_item)
 
     @staticmethod
     def _can_buy(character: Character, shop_item: ShopItem) -> bool:

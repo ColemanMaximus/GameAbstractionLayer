@@ -9,7 +9,7 @@ if __name__ == "__main__":
     # Creates a user account with an example email.
     # This will be replaced in the near future to a proper auth service.
     account = Account(email="example@email.com")
-    char = account.create_character(name="Frexel")
+    char = account.create_character(name="Frexel").content
 
     # Create items which can be used in inventories.
     sword_item = Item(

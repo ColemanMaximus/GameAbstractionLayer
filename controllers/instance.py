@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 
 from containers.registry import EntityRegistry
+from controllers.action import ActionResponse, Action, ActionType, ActionStatusType
 from models.map import Map, MapCell
 from models.entity import NPC
 from models.npc import NpcData
@@ -33,9 +34,15 @@ class MapCellInstance(Instance):
     def entities(self) -> EntityRegistry:
         return self.__entities
 
-    def init_entities(self):
+    def init_entities(self) -> ActionResponse:
+        action = Action(ActionType.MAP_ENTITIES_LOAD)
+
         if not self.cell.npcs:
-            return
+            return ActionResponse(
+                action,
+                ActionStatusType.FAILED,
+                "There were no initial entities to load."
+            )
 
         for npcdata in self.cell.npcs:
             if not isinstance(npcdata, NpcData):
@@ -44,6 +51,8 @@ class MapCellInstance(Instance):
             self.entities.add(
                 NPC(len(self.entities) + 1, npcdata)
             )
+
+        return ActionResponse(action, ActionStatusType.SUCCESS)
 
     def kill(self):
         pass
@@ -61,11 +70,19 @@ class MapInstance(Instance):
     def map(self) -> Map:
         return self.source
 
-    def load_cell(self, map_cell: MapCell | None):
-        if not map_cell:
-            return
+    def load_cell(self, map_cell: MapCell | None) -> ActionResponse:
+        action = Action(ActionType.MAP_CELL_LOAD)
 
-        self.__active_cell = MapCellInstance(map_cell)
+        if not map_cell:
+            return ActionResponse(
+                action,
+                ActionStatusType.ERROR,
+                "There was no map cell to load from."
+            )
+
+        cell_instance = MapCellInstance(map_cell)
+        self.__active_cell = cell_instance
+        return ActionResponse(action, ActionStatusType.SUCCESS, cell_instance)
 
     @property
     def active_cell(self) -> MapCellInstance:

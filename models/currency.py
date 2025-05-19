@@ -1,3 +1,6 @@
+from controllers.action import ActionResponse, Action, ActionType, ActionStatusType
+
+
 class Currency:
     def __init__(self, name: str, ending_char: str = ""):
         self.name = name
@@ -35,11 +38,17 @@ class TradableCurrency(Currency):
 
         self.__balance = balance
 
-    def add(self, value: int | float):
+    def add(self, value: int | float) -> ActionResponse:
+        action = Action(ActionType.CURRENCY_ADDED)
         self.balance += value
 
-    def remove(self, value: int | float):
+        return ActionResponse(action, ActionStatusType.SUCCESS, self.balance)
+
+    def remove(self, value: int | float) -> ActionResponse:
+        action = Action(ActionType.CURRENCY_REMOVED)
         self.balance -= value
+
+        return ActionResponse(action, ActionStatusType.SUCCESS, self.balance)
 
     def can_afford(self, balance: int | float) -> bool:
         if self.balance < balance:

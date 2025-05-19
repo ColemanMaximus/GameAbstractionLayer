@@ -2,6 +2,7 @@ from time import time
 
 from containers.inventory import PlayerInventory
 from containers.registry import TradableCurrencyRegistry
+from controllers.action import ActionResponse
 
 
 class CharacterError(Exception):
@@ -66,7 +67,7 @@ class Character:
         return self.name
 
     @staticmethod
-    def create(account, name: str):
+    def create(account, name: str) -> ActionResponse:
         return account.create_character(name)
 
 
