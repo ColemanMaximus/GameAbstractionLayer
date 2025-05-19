@@ -2,8 +2,8 @@ from time import time
 from uuid import uuid4
 
 from containers.registry import AccountRegistry, CharacterRegistry, TradableCurrencyRegistry
-from controllers.action import ActionResponse, Action, ActionStatus, ActionStatusType, ActionType
-from models.character import Character, CharacterError
+from controllers.action import ActionResponse, Action, ActionStatusType, ActionType
+from models.character import Character
 
 class Account:
     def __init__(self, email: str, timestamp: float = None, currencies: TradableCurrencyRegistry = None):
