@@ -1,0 +1,11 @@
+[
+  {
+    "id": 1,
+    "name": "Town",
+    "map_cells": [
+      {
+        "name": "town_main"
+      }
+    ]
+  }
+]
