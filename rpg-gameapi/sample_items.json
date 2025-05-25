@@ -1,0 +1,72 @@
+[
+  {
+    "id": 1,
+    "name": "Warrior Sword",
+    "description": "A sturdy sword for a brave warrior.",
+    "level": 5,
+    "sprite": "warrior_sword.png"
+  },
+  {
+    "id": 2,
+    "name": "Mage Staff",
+    "description": "A staff imbued with arcane energy.",
+    "level": 7,
+    "sprite": "mage_staff.png"
+  },
+  {
+    "id": 3,
+    "name": "Rogue's Dagger",
+    "description": "A light and sharp dagger, perfect for stealth.",
+    "level": 4,
+    "sprite": "rogue_dagger.png"
+  },
+  {
+    "id": 4,
+    "name": "Healing Potion",
+    "description": "Restores a small amount of health.",
+    "level": 1,
+    "sprite": "healing_potion.png"
+  },
+  {
+    "id": 5,
+    "name": "Iron Shield",
+    "description": "A basic shield offering decent protection.",
+    "level": 3,
+    "sprite": "iron_shield.png"
+  },
+  {
+    "id": 6,
+    "name": "Leather Armor",
+    "description": "Light armor providing minimal defense.",
+    "level": 2,
+    "sprite": "leather_armor.png"
+  },
+  {
+    "id": 7,
+    "name": "Bow of the Swift",
+    "description": "A finely crafted bow for quick attacks.",
+    "level": 6,
+    "sprite": "swift_bow.png"
+  },
+  {
+    "id": 8,
+    "name": "Mana Potion",
+    "description": "Restores a small amount of mana.",
+    "level": 1,
+    "sprite": "mana_potion.png"
+  },
+  {
+    "id": 9,
+    "name": "Amulet of Strength",
+    "description": "An amulet that slightly increases the wearer's strength.",
+    "level": 8,
+    "sprite": "strength_amulet.png"
+  },
+  {
+    "id": 10,
+    "name": "Ring of Protection",
+    "description": "A simple ring that offers minor protection.",
+    "level": 4,
+    "sprite": "protection_ring.png"
+  }
+]
